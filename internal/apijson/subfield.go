@@ -1,7 +1,7 @@
 package apijson
 
 import (
-	"github.com/stainless-sdks/vibedropper-go/packages/respjson"
+	"github.com/reduce/vibedropper-go/packages/respjson"
 	"reflect"
 )
 

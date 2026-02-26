@@ -1,0 +1,10 @@
+# Changelog
+
+## 0.0.2 (2026-02-26)
+
+Full Changelog: [v0.0.1...v0.0.2](https://github.com/reduce/vibedropper-go/compare/v0.0.1...v0.0.2)
+
+### Chores
+
+* configure new SDK language ([afe5c97](https://github.com/reduce/vibedropper-go/commit/afe5c971bd90c4cbaffb4a950ee6b9b48bd181b0))
+* update SDK settings ([274d9a5](https://github.com/reduce/vibedropper-go/commit/274d9a5b0a719f97b4fdc7108cc28e2b7f611d09))

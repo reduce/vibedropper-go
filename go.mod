@@ -1,4 +1,4 @@
-module github.com/stainless-sdks/vibedropper-go
+module github.com/reduce/vibedropper-go
 
 go 1.22
 

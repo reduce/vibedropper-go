@@ -7,9 +7,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/stainless-sdks/vibedropper-go"
-	"github.com/stainless-sdks/vibedropper-go/internal/testutil"
-	"github.com/stainless-sdks/vibedropper-go/option"
+	"github.com/reduce/vibedropper-go"
+	"github.com/reduce/vibedropper-go/internal/testutil"
+	"github.com/reduce/vibedropper-go/option"
 )
 
 func TestUsage(t *testing.T) {

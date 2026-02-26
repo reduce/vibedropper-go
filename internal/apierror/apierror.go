@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"net/http/httputil"
 
-	"github.com/stainless-sdks/vibedropper-go/internal/apijson"
-	"github.com/stainless-sdks/vibedropper-go/packages/respjson"
+	"github.com/reduce/vibedropper-go/internal/apijson"
+	"github.com/reduce/vibedropper-go/packages/respjson"
 )
 
 // Error represents an error that originates from the API, i.e. when a request is

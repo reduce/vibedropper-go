@@ -3,8 +3,8 @@
 package vibedropper
 
 import (
-	"github.com/stainless-sdks/vibedropper-go/internal/apierror"
-	"github.com/stainless-sdks/vibedropper-go/packages/param"
+	"github.com/reduce/vibedropper-go/internal/apierror"
+	"github.com/reduce/vibedropper-go/packages/param"
 )
 
 // aliased to make [param.APIUnion] private when embedding
