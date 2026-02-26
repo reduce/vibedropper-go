@@ -2,7 +2,7 @@ package param
 
 import (
 	"encoding/json"
-	"github.com/stainless-sdks/vibedropper-go/internal/encoding/json/sentinel"
+	"github.com/reduce/vibedropper-go/internal/encoding/json/sentinel"
 	"reflect"
 )
 

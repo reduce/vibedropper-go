@@ -2,7 +2,7 @@ package apiform
 
 import (
 	"bytes"
-	"github.com/stainless-sdks/vibedropper-go/packages/param"
+	"github.com/reduce/vibedropper-go/packages/param"
 	"io"
 	"mime/multipart"
 	"strings"

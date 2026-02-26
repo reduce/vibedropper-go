@@ -3,8 +3,8 @@ package respjson_test
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/stainless-sdks/vibedropper-go/internal/apijson"
-	rj "github.com/stainless-sdks/vibedropper-go/packages/respjson"
+	"github.com/reduce/vibedropper-go/internal/apijson"
+	rj "github.com/reduce/vibedropper-go/packages/respjson"
 	"reflect"
 	"testing"
 )

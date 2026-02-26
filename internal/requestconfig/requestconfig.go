@@ -18,10 +18,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/stainless-sdks/vibedropper-go/internal"
-	"github.com/stainless-sdks/vibedropper-go/internal/apierror"
-	"github.com/stainless-sdks/vibedropper-go/internal/apiform"
-	"github.com/stainless-sdks/vibedropper-go/internal/apiquery"
+	"github.com/reduce/vibedropper-go/internal"
+	"github.com/reduce/vibedropper-go/internal/apierror"
+	"github.com/reduce/vibedropper-go/internal/apiform"
+	"github.com/reduce/vibedropper-go/internal/apiquery"
 )
 
 func getDefaultHeaders() map[string]string {

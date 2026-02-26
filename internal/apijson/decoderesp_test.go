@@ -2,8 +2,8 @@ package apijson_test
 
 import (
 	"encoding/json"
-	"github.com/stainless-sdks/vibedropper-go/internal/apijson"
-	"github.com/stainless-sdks/vibedropper-go/packages/respjson"
+	"github.com/reduce/vibedropper-go/internal/apijson"
+	"github.com/reduce/vibedropper-go/packages/respjson"
 	"testing"
 )
 

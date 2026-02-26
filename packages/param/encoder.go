@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	shimjson "github.com/stainless-sdks/vibedropper-go/internal/encoding/json"
+	shimjson "github.com/reduce/vibedropper-go/internal/encoding/json"
 
 	"github.com/tidwall/sjson"
 )
