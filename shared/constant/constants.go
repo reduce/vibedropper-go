@@ -3,7 +3,7 @@
 package constant
 
 import (
-	shimjson "github.com/stainless-sdks/vibedropper-go/internal/encoding/json"
+	shimjson "github.com/reduce/vibedropper-go/internal/encoding/json"
 )
 
 type Constant[T any] interface {

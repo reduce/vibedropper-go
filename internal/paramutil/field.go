@@ -1,8 +1,8 @@
 package paramutil
 
 import (
-	"github.com/stainless-sdks/vibedropper-go/packages/param"
-	"github.com/stainless-sdks/vibedropper-go/packages/respjson"
+	"github.com/reduce/vibedropper-go/packages/param"
+	"github.com/reduce/vibedropper-go/packages/respjson"
 )
 
 func AddrIfPresent[T comparable](v param.Opt[T]) *T {

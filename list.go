@@ -11,12 +11,12 @@ import (
 	"slices"
 	"time"
 
-	"github.com/stainless-sdks/vibedropper-go/internal/apijson"
-	"github.com/stainless-sdks/vibedropper-go/internal/apiquery"
-	"github.com/stainless-sdks/vibedropper-go/internal/requestconfig"
-	"github.com/stainless-sdks/vibedropper-go/option"
-	"github.com/stainless-sdks/vibedropper-go/packages/param"
-	"github.com/stainless-sdks/vibedropper-go/packages/respjson"
+	"github.com/reduce/vibedropper-go/internal/apijson"
+	"github.com/reduce/vibedropper-go/internal/apiquery"
+	"github.com/reduce/vibedropper-go/internal/requestconfig"
+	"github.com/reduce/vibedropper-go/option"
+	"github.com/reduce/vibedropper-go/packages/param"
+	"github.com/reduce/vibedropper-go/packages/respjson"
 )
 
 // ListService contains methods and other services that help with interacting with

@@ -8,8 +8,8 @@ import (
 	"os"
 	"slices"
 
-	"github.com/stainless-sdks/vibedropper-go/internal/requestconfig"
-	"github.com/stainless-sdks/vibedropper-go/option"
+	"github.com/reduce/vibedropper-go/internal/requestconfig"
+	"github.com/reduce/vibedropper-go/option"
 )
 
 // Client creates a struct with services and top level methods that help with
