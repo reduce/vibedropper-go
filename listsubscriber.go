@@ -49,7 +49,7 @@ func (r *ListSubscriberService) List(ctx context.Context, listID string, opts ..
 	return
 }
 
-// Add subscriber
+// Add subscriber to list
 func (r *ListSubscriberService) Add(ctx context.Context, listID string, body ListSubscriberAddParams, opts ...option.RequestOption) (res *ListSubscriberAddResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if listID == "" {
@@ -61,7 +61,7 @@ func (r *ListSubscriberService) Add(ctx context.Context, listID string, body Lis
 	return
 }
 
-// Remove subscriber
+// Remove subscriber from list
 func (r *ListSubscriberService) Remove(ctx context.Context, subscriberID string, body ListSubscriberRemoveParams, opts ...option.RequestOption) (res *ListSubscriberRemoveResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if body.ListID == "" {

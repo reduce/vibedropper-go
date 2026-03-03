@@ -72,30 +72,46 @@ func (r *CustomerService) List(ctx context.Context, query CustomerListParams, op
 
 type Customer struct {
 	ID                string    `json:"id"`
+	AddressLine1      string    `json:"addressLine1" api:"nullable"`
+	AddressLine2      string    `json:"addressLine2" api:"nullable"`
 	AverageOrderValue float64   `json:"averageOrderValue"`
+	City              string    `json:"city" api:"nullable"`
+	Country           string    `json:"country" api:"nullable"`
 	Email             string    `json:"email"`
+	FirstName         string    `json:"firstName" api:"nullable"`
+	LastName          string    `json:"lastName" api:"nullable"`
 	LastPurchaseDate  time.Time `json:"lastPurchaseDate" api:"nullable" format:"date-time"`
 	Lists             []any     `json:"lists"`
 	Name              string    `json:"name" api:"nullable"`
 	OrgID             string    `json:"orgId"`
 	PickupLocation    any       `json:"pickupLocation" api:"nullable"`
+	PostalCode        string    `json:"postalCode" api:"nullable"`
 	PurchaseCount     int64     `json:"purchaseCount"`
 	Region            any       `json:"region" api:"nullable"`
 	Roles             []any     `json:"roles"`
+	State             string    `json:"state" api:"nullable"`
 	TotalSpent        float64   `json:"totalSpent"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		ID                respjson.Field
+		AddressLine1      respjson.Field
+		AddressLine2      respjson.Field
 		AverageOrderValue respjson.Field
+		City              respjson.Field
+		Country           respjson.Field
 		Email             respjson.Field
+		FirstName         respjson.Field
+		LastName          respjson.Field
 		LastPurchaseDate  respjson.Field
 		Lists             respjson.Field
 		Name              respjson.Field
 		OrgID             respjson.Field
 		PickupLocation    respjson.Field
+		PostalCode        respjson.Field
 		PurchaseCount     respjson.Field
 		Region            respjson.Field
 		Roles             respjson.Field
+		State             respjson.Field
 		TotalSpent        respjson.Field
 		ExtraFields       map[string]respjson.Field
 		raw               string
@@ -181,8 +197,16 @@ func (r *CustomerListResponsePagination) UnmarshalJSON(data []byte) error {
 }
 
 type CustomerUpdateParams struct {
+	AddressLine1     param.Opt[string] `json:"addressLine1,omitzero"`
+	AddressLine2     param.Opt[string] `json:"addressLine2,omitzero"`
+	City             param.Opt[string] `json:"city,omitzero"`
+	Country          param.Opt[string] `json:"country,omitzero"`
+	FirstName        param.Opt[string] `json:"firstName,omitzero"`
+	LastName         param.Opt[string] `json:"lastName,omitzero"`
 	PickupLocationID param.Opt[string] `json:"pickupLocationId,omitzero"`
+	PostalCode       param.Opt[string] `json:"postalCode,omitzero"`
 	RegionID         param.Opt[string] `json:"regionId,omitzero"`
+	State            param.Opt[string] `json:"state,omitzero"`
 	Name             param.Opt[string] `json:"name,omitzero"`
 	paramObj
 }
@@ -196,8 +220,9 @@ func (r *CustomerUpdateParams) UnmarshalJSON(data []byte) error {
 }
 
 type CustomerListParams struct {
-	Limit  param.Opt[int64]  `query:"limit,omitzero" json:"-"`
-	Page   param.Opt[int64]  `query:"page,omitzero" json:"-"`
+	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
+	Page  param.Opt[int64] `query:"page,omitzero" json:"-"`
+	// Search by name or email
 	Search param.Opt[string] `query:"search,omitzero" json:"-"`
 	paramObj
 }
