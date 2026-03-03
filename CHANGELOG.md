@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0 (2026-03-03)
+
+Full Changelog: [v0.1.0...v0.2.0](https://github.com/reduce/vibedropper-go/compare/v0.1.0...v0.2.0)
+
+### Features
+
+* **api:** api update ([186db93](https://github.com/reduce/vibedropper-go/commit/186db931d3b6869a3b452992f7be166b83b2e1fa))
+
 ## 0.1.0 (2026-02-28)
 
 Full Changelog: [v0.0.3...v0.1.0](https://github.com/reduce/vibedropper-go/compare/v0.0.3...v0.1.0)

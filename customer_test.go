@@ -53,9 +53,17 @@ func TestCustomerUpdateWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"customerId",
 		vibedropper.CustomerUpdateParams{
+			AddressLine1:     vibedropper.String("addressLine1"),
+			AddressLine2:     vibedropper.String("addressLine2"),
+			City:             vibedropper.String("city"),
+			Country:          vibedropper.String("country"),
+			FirstName:        vibedropper.String("firstName"),
+			LastName:         vibedropper.String("lastName"),
 			Name:             vibedropper.String("name"),
 			PickupLocationID: vibedropper.String("pickupLocationId"),
+			PostalCode:       vibedropper.String("postalCode"),
 			RegionID:         vibedropper.String("regionId"),
+			State:            vibedropper.String("state"),
 		},
 	)
 	if err != nil {
@@ -81,7 +89,7 @@ func TestCustomerListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Customers.List(context.TODO(), vibedropper.CustomerListParams{
-		Limit:  vibedropper.Int(0),
+		Limit:  vibedropper.Int(100),
 		Page:   vibedropper.Int(0),
 		Search: vibedropper.String("search"),
 	})

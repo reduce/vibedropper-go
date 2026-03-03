@@ -50,7 +50,7 @@ func TestListListWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Lists.List(context.TODO(), vibedropper.ListListParams{
-		Limit: vibedropper.Int(0),
+		Limit: vibedropper.Int(100),
 		Page:  vibedropper.Int(0),
 	})
 	if err != nil {

@@ -12,8 +12,10 @@ import (
 	"time"
 
 	"github.com/reduce/vibedropper-go/internal/apijson"
+	"github.com/reduce/vibedropper-go/internal/apiquery"
 	"github.com/reduce/vibedropper-go/internal/requestconfig"
 	"github.com/reduce/vibedropper-go/option"
+	"github.com/reduce/vibedropper-go/packages/param"
 	"github.com/reduce/vibedropper-go/packages/respjson"
 )
 
@@ -49,10 +51,10 @@ func (r *CampaignService) Get(ctx context.Context, campaignID string, opts ...op
 }
 
 // List campaigns
-func (r *CampaignService) List(ctx context.Context, opts ...option.RequestOption) (res *CampaignListResponse, err error) {
+func (r *CampaignService) List(ctx context.Context, query CampaignListParams, opts ...option.RequestOption) (res *CampaignListResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "campaigns"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
 	return
 }
 
@@ -126,4 +128,18 @@ type CampaignListResponse struct {
 func (r CampaignListResponse) RawJSON() string { return r.JSON.raw }
 func (r *CampaignListResponse) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
+}
+
+type CampaignListParams struct {
+	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
+	Page  param.Opt[int64] `query:"page,omitzero" json:"-"`
+	paramObj
+}
+
+// URLQuery serializes [CampaignListParams]'s query parameters as `url.Values`.
+func (r CampaignListParams) URLQuery() (v url.Values, err error) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
 }
