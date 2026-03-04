@@ -16,13 +16,19 @@ import (
 // interacting with the vibedropper API. You should not instantiate this client
 // directly, and instead use the [NewClient] method instead.
 type Client struct {
-	Options        []option.RequestOption
-	Lists          ListService
-	Customers      CustomerService
-	Campaigns      CampaignService
-	Forms          FormService
+	Options []option.RequestOption
+	// Manage subscriber lists
+	Lists ListService
+	// Manage customers
+	Customers CustomerService
+	// Access email campaigns (read-only)
+	Campaigns CampaignService
+	// Manage forms and submissions
+	Forms FormService
+	// Manage knowledge bases and articles
 	KnowledgeBases KnowledgeBaseService
-	Pages          PageService
+	// Manage landing pages
+	Pages PageService
 }
 
 // DefaultClientOptions read from the environment (VIBEDROPPER_API_KEY,
