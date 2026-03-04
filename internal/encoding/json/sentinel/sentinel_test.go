@@ -1,8 +1,8 @@
 package sentinel_test
 
 import (
-	"github.com/stainless-sdks/vibedropper-go/internal/encoding/json/sentinel"
-	"github.com/stainless-sdks/vibedropper-go/packages/param"
+	"github.com/reduce/vibedropper-go/internal/encoding/json/sentinel"
+	"github.com/reduce/vibedropper-go/packages/param"
 	"reflect"
 	"slices"
 	"testing"
