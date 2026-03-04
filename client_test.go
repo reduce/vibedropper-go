@@ -10,9 +10,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stainless-sdks/vibedropper-go"
-	"github.com/stainless-sdks/vibedropper-go/internal"
-	"github.com/stainless-sdks/vibedropper-go/option"
+	"github.com/reduce/vibedropper-go"
+	"github.com/reduce/vibedropper-go/internal"
+	"github.com/reduce/vibedropper-go/option"
 )
 
 type closureTransport struct {

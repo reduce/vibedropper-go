@@ -2,7 +2,7 @@ package param_test
 
 import (
 	"encoding/json"
-	"github.com/stainless-sdks/vibedropper-go/packages/param"
+	"github.com/reduce/vibedropper-go/packages/param"
 	"testing"
 )
 

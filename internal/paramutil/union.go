@@ -2,7 +2,7 @@ package paramutil
 
 import (
 	"fmt"
-	"github.com/stainless-sdks/vibedropper-go/packages/param"
+	"github.com/reduce/vibedropper-go/packages/param"
 	"reflect"
 )
 
