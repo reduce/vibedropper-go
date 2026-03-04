@@ -18,6 +18,8 @@ import (
 	"github.com/reduce/vibedropper-go/packages/respjson"
 )
 
+// Manage knowledge bases and articles
+//
 // KnowledgeBaseService contains methods and other services that help with
 // interacting with the vibedropper API.
 //
@@ -25,7 +27,8 @@ import (
 // automatically. You should not instantiate this service directly, and instead use
 // the [NewKnowledgeBaseService] method instead.
 type KnowledgeBaseService struct {
-	Options  []option.RequestOption
+	Options []option.RequestOption
+	// Manage knowledge bases and articles
 	Articles KnowledgeBaseArticleService
 }
 

@@ -17,6 +17,8 @@ import (
 	"github.com/reduce/vibedropper-go/packages/respjson"
 )
 
+// Access email campaigns (read-only)
+//
 // CampaignService contains methods and other services that help with interacting
 // with the vibedropper API.
 //

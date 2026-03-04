@@ -19,6 +19,8 @@ import (
 	"github.com/reduce/vibedropper-go/packages/respjson"
 )
 
+// Manage customers
+//
 // CustomerService contains methods and other services that help with interacting
 // with the vibedropper API.
 //

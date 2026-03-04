@@ -19,6 +19,8 @@ import (
 	"github.com/reduce/vibedropper-go/packages/respjson"
 )
 
+// Manage subscriber lists
+//
 // ListService contains methods and other services that help with interacting with
 // the vibedropper API.
 //
@@ -26,7 +28,8 @@ import (
 // automatically. You should not instantiate this service directly, and instead use
 // the [NewListService] method instead.
 type ListService struct {
-	Options     []option.RequestOption
+	Options []option.RequestOption
+	// Manage list subscribers
 	Subscribers ListSubscriberService
 }
 

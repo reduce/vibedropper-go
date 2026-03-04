@@ -18,6 +18,8 @@ import (
 	"github.com/reduce/vibedropper-go/packages/respjson"
 )
 
+// Manage list subscribers
+//
 // ListSubscriberService contains methods and other services that help with
 // interacting with the vibedropper API.
 //
