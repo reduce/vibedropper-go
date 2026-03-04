@@ -2,7 +2,7 @@ package apijson
 
 import (
 	"errors"
-	"github.com/reduce/vibedropper-go/packages/param"
+	"github.com/stainless-sdks/vibedropper-go/packages/param"
 	"reflect"
 
 	"github.com/tidwall/gjson"

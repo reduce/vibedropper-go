@@ -1,7 +1,7 @@
 package sentinel
 
 import (
-	"github.com/reduce/vibedropper-go/internal/encoding/json/shims"
+	"github.com/stainless-sdks/vibedropper-go/internal/encoding/json/shims"
 	"reflect"
 	"sync"
 )

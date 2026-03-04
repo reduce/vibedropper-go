@@ -8,18 +8,21 @@ import (
 	"os"
 	"slices"
 
-	"github.com/reduce/vibedropper-go/internal/requestconfig"
-	"github.com/reduce/vibedropper-go/option"
+	"github.com/stainless-sdks/vibedropper-go/internal/requestconfig"
+	"github.com/stainless-sdks/vibedropper-go/option"
 )
 
 // Client creates a struct with services and top level methods that help with
 // interacting with the vibedropper API. You should not instantiate this client
 // directly, and instead use the [NewClient] method instead.
 type Client struct {
-	Options   []option.RequestOption
-	Lists     ListService
-	Customers CustomerService
-	Campaigns CampaignService
+	Options        []option.RequestOption
+	Lists          ListService
+	Customers      CustomerService
+	Campaigns      CampaignService
+	Forms          FormService
+	KnowledgeBases KnowledgeBaseService
+	Pages          PageService
 }
 
 // DefaultClientOptions read from the environment (VIBEDROPPER_API_KEY,
@@ -47,6 +50,9 @@ func NewClient(opts ...option.RequestOption) (r Client) {
 	r.Lists = NewListService(opts...)
 	r.Customers = NewCustomerService(opts...)
 	r.Campaigns = NewCampaignService(opts...)
+	r.Forms = NewFormService(opts...)
+	r.KnowledgeBases = NewKnowledgeBaseService(opts...)
+	r.Pages = NewPageService(opts...)
 
 	return
 }

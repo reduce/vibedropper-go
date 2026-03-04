@@ -11,12 +11,12 @@ import (
 	"slices"
 	"time"
 
-	"github.com/reduce/vibedropper-go/internal/apijson"
-	"github.com/reduce/vibedropper-go/internal/apiquery"
-	"github.com/reduce/vibedropper-go/internal/requestconfig"
-	"github.com/reduce/vibedropper-go/option"
-	"github.com/reduce/vibedropper-go/packages/param"
-	"github.com/reduce/vibedropper-go/packages/respjson"
+	"github.com/stainless-sdks/vibedropper-go/internal/apijson"
+	"github.com/stainless-sdks/vibedropper-go/internal/apiquery"
+	"github.com/stainless-sdks/vibedropper-go/internal/requestconfig"
+	"github.com/stainless-sdks/vibedropper-go/option"
+	"github.com/stainless-sdks/vibedropper-go/packages/param"
+	"github.com/stainless-sdks/vibedropper-go/packages/respjson"
 )
 
 // CustomerService contains methods and other services that help with interacting
@@ -157,8 +157,8 @@ func (r *CustomerUpdateResponse) UnmarshalJSON(data []byte) error {
 }
 
 type CustomerListResponse struct {
-	Customers  []Customer                     `json:"customers"`
-	Pagination CustomerListResponsePagination `json:"pagination"`
+	Customers  []Customer `json:"customers"`
+	Pagination Pagination `json:"pagination"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Customers   respjson.Field
@@ -171,28 +171,6 @@ type CustomerListResponse struct {
 // Returns the unmodified JSON received from the API
 func (r CustomerListResponse) RawJSON() string { return r.JSON.raw }
 func (r *CustomerListResponse) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-type CustomerListResponsePagination struct {
-	Limit      int64 `json:"limit"`
-	Page       int64 `json:"page"`
-	Total      int64 `json:"total"`
-	TotalPages int64 `json:"totalPages"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		Limit       respjson.Field
-		Page        respjson.Field
-		Total       respjson.Field
-		TotalPages  respjson.Field
-		ExtraFields map[string]respjson.Field
-		raw         string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r CustomerListResponsePagination) RawJSON() string { return r.JSON.raw }
-func (r *CustomerListResponsePagination) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
