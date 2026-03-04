@@ -1,7 +1,7 @@
 package vibedropper
 
 import (
-	"github.com/reduce/vibedropper-go/packages/param"
+	"github.com/stainless-sdks/vibedropper-go/packages/param"
 	"io"
 	"time"
 )

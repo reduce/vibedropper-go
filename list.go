@@ -11,12 +11,12 @@ import (
 	"slices"
 	"time"
 
-	"github.com/reduce/vibedropper-go/internal/apijson"
-	"github.com/reduce/vibedropper-go/internal/apiquery"
-	"github.com/reduce/vibedropper-go/internal/requestconfig"
-	"github.com/reduce/vibedropper-go/option"
-	"github.com/reduce/vibedropper-go/packages/param"
-	"github.com/reduce/vibedropper-go/packages/respjson"
+	"github.com/stainless-sdks/vibedropper-go/internal/apijson"
+	"github.com/stainless-sdks/vibedropper-go/internal/apiquery"
+	"github.com/stainless-sdks/vibedropper-go/internal/requestconfig"
+	"github.com/stainless-sdks/vibedropper-go/option"
+	"github.com/stainless-sdks/vibedropper-go/packages/param"
+	"github.com/stainless-sdks/vibedropper-go/packages/respjson"
 )
 
 // ListService contains methods and other services that help with interacting with
@@ -104,6 +104,28 @@ func (r *List_Count) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
+type Pagination struct {
+	Limit      int64 `json:"limit"`
+	Page       int64 `json:"page"`
+	Total      int64 `json:"total"`
+	TotalPages int64 `json:"totalPages"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		Limit       respjson.Field
+		Page        respjson.Field
+		Total       respjson.Field
+		TotalPages  respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r Pagination) RawJSON() string { return r.JSON.raw }
+func (r *Pagination) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
 type ListGetResponse struct {
 	List List `json:"list"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
@@ -121,8 +143,8 @@ func (r *ListGetResponse) UnmarshalJSON(data []byte) error {
 }
 
 type ListListResponse struct {
-	Lists      []List                     `json:"lists"`
-	Pagination ListListResponsePagination `json:"pagination"`
+	Lists      []List     `json:"lists"`
+	Pagination Pagination `json:"pagination"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		Lists       respjson.Field
@@ -135,28 +157,6 @@ type ListListResponse struct {
 // Returns the unmodified JSON received from the API
 func (r ListListResponse) RawJSON() string { return r.JSON.raw }
 func (r *ListListResponse) UnmarshalJSON(data []byte) error {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-type ListListResponsePagination struct {
-	Limit      int64 `json:"limit"`
-	Page       int64 `json:"page"`
-	Total      int64 `json:"total"`
-	TotalPages int64 `json:"totalPages"`
-	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
-	JSON struct {
-		Limit       respjson.Field
-		Page        respjson.Field
-		Total       respjson.Field
-		TotalPages  respjson.Field
-		ExtraFields map[string]respjson.Field
-		raw         string
-	} `json:"-"`
-}
-
-// Returns the unmodified JSON received from the API
-func (r ListListResponsePagination) RawJSON() string { return r.JSON.raw }
-func (r *ListListResponsePagination) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 

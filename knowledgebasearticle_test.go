@@ -13,7 +13,7 @@ import (
 	"github.com/stainless-sdks/vibedropper-go/option"
 )
 
-func TestListSubscriberList(t *testing.T) {
+func TestKnowledgeBaseArticleNewWithOptionalParams(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -26,38 +26,15 @@ func TestListSubscriberList(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Lists.Subscribers.List(context.TODO(), "listId")
-	if err != nil {
-		var apierr *vibedropper.Error
-		if errors.As(err, &apierr) {
-			t.Log(string(apierr.DumpRequest(true)))
-		}
-		t.Fatalf("err should be nil: %s", err.Error())
-	}
-}
-
-func TestListSubscriberAddWithOptionalParams(t *testing.T) {
-	t.Skip("Mock server tests are disabled")
-	baseURL := "http://localhost:4010"
-	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
-		baseURL = envURL
-	}
-	if !testutil.CheckTestServer(t, baseURL) {
-		return
-	}
-	client := vibedropper.NewClient(
-		option.WithBaseURL(baseURL),
-		option.WithAPIKey("My API Key"),
-	)
-	_, err := client.Lists.Subscribers.Add(
+	_, err := client.KnowledgeBases.Articles.New(
 		context.TODO(),
-		"listId",
-		vibedropper.ListSubscriberAddParams{
-			Email:            "dev@stainless.com",
-			CustomFields:     map[string]any{},
-			Name:             vibedropper.String("name"),
-			PickupLocationID: vibedropper.String("pickupLocationId"),
-			RegionID:         vibedropper.String("regionId"),
+		"kbId",
+		vibedropper.KnowledgeBaseArticleNewParams{
+			Title:      "title",
+			CategoryID: vibedropper.String("categoryId"),
+			Content:    vibedropper.String("content"),
+			Excerpt:    vibedropper.String("excerpt"),
+			Published:  vibedropper.Bool(true),
 		},
 	)
 	if err != nil {
@@ -69,7 +46,7 @@ func TestListSubscriberAddWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestListSubscriberRemove(t *testing.T) {
+func TestKnowledgeBaseArticleListWithOptionalParams(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -82,11 +59,12 @@ func TestListSubscriberRemove(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Lists.Subscribers.Remove(
+	_, err := client.KnowledgeBases.Articles.List(
 		context.TODO(),
-		"subscriberId",
-		vibedropper.ListSubscriberRemoveParams{
-			ListID: "listId",
+		"kbId",
+		vibedropper.KnowledgeBaseArticleListParams{
+			Limit: vibedropper.Int(100),
+			Page:  vibedropper.Int(0),
 		},
 	)
 	if err != nil {
