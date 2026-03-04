@@ -63,7 +63,7 @@ func (r *KnowledgeBaseService) Update(ctx context.Context, kbID string, body Kno
 	return
 }
 
-// List knowledge bases
+// Returns all knowledge bases ordered by sortOrder then creation date.
 func (r *KnowledgeBaseService) List(ctx context.Context, opts ...option.RequestOption) (res *KnowledgeBaseListResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "knowledge-bases"

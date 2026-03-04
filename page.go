@@ -91,9 +91,8 @@ type Page struct {
 	OrgID       string     `json:"orgId"`
 	Slug        string     `json:"slug"`
 	// Any of "DRAFT", "ACTIVE", "ENDED", "ARCHIVED".
-	Status      PageStatus `json:"status"`
-	StoreBlocks []any      `json:"storeBlocks" api:"nullable"`
-	UpdatedAt   time.Time  `json:"updatedAt" format:"date-time"`
+	Status    PageStatus `json:"status"`
+	UpdatedAt time.Time  `json:"updatedAt" format:"date-time"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		ID          respjson.Field
@@ -104,7 +103,6 @@ type Page struct {
 		OrgID       respjson.Field
 		Slug        respjson.Field
 		Status      respjson.Field
-		StoreBlocks respjson.Field
 		UpdatedAt   respjson.Field
 		ExtraFields map[string]respjson.Field
 		raw         string

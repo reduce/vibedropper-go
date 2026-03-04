@@ -63,18 +63,19 @@ func (r *KnowledgeBaseArticleService) List(ctx context.Context, kbID string, que
 }
 
 type KnowledgeBaseArticle struct {
-	ID              string                       `json:"id"`
-	Category        KnowledgeBaseArticleCategory `json:"category" api:"nullable"`
-	CategoryID      string                       `json:"categoryId" api:"nullable"`
-	Content         string                       `json:"content"`
-	CreatedAt       time.Time                    `json:"createdAt" format:"date-time"`
-	Excerpt         string                       `json:"excerpt" api:"nullable"`
-	KnowledgeBaseID string                       `json:"knowledgeBaseId"`
-	Published       bool                         `json:"published"`
-	Slug            string                       `json:"slug"`
-	SortOrder       int64                        `json:"sortOrder"`
-	Title           string                       `json:"title"`
-	UpdatedAt       time.Time                    `json:"updatedAt" format:"date-time"`
+	ID         string                       `json:"id"`
+	Category   KnowledgeBaseArticleCategory `json:"category" api:"nullable"`
+	CategoryID string                       `json:"categoryId" api:"nullable"`
+	// HTML content
+	Content         string    `json:"content"`
+	CreatedAt       time.Time `json:"createdAt" format:"date-time"`
+	Excerpt         string    `json:"excerpt" api:"nullable"`
+	KnowledgeBaseID string    `json:"knowledgeBaseId"`
+	Published       bool      `json:"published"`
+	Slug            string    `json:"slug"`
+	SortOrder       int64     `json:"sortOrder"`
+	Title           string    `json:"title"`
+	UpdatedAt       time.Time `json:"updatedAt" format:"date-time"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		ID              respjson.Field
@@ -158,7 +159,7 @@ type KnowledgeBaseArticleNewParams struct {
 	Title      string            `json:"title" api:"required"`
 	CategoryID param.Opt[string] `json:"categoryId,omitzero"`
 	Excerpt    param.Opt[string] `json:"excerpt,omitzero"`
-	// HTML or markdown content
+	// HTML content
 	Content   param.Opt[string] `json:"content,omitzero"`
 	Published param.Opt[bool]   `json:"published,omitzero"`
 	paramObj
