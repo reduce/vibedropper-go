@@ -38,7 +38,7 @@ func NewCustomerService(opts ...option.RequestOption) (r CustomerService) {
 	return
 }
 
-// Get customer
+// Get a customer
 func (r *CustomerService) Get(ctx context.Context, customerID string, opts ...option.RequestOption) (res *CustomerGetResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if customerID == "" {
@@ -50,7 +50,7 @@ func (r *CustomerService) Get(ctx context.Context, customerID string, opts ...op
 	return
 }
 
-// Update customer
+// Update a customer
 func (r *CustomerService) Update(ctx context.Context, customerID string, body CustomerUpdateParams, opts ...option.RequestOption) (res *CustomerUpdateResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if customerID == "" {
@@ -77,20 +77,25 @@ type Customer struct {
 	AverageOrderValue float64   `json:"averageOrderValue"`
 	City              string    `json:"city" api:"nullable"`
 	Country           string    `json:"country" api:"nullable"`
-	Email             string    `json:"email"`
+	CreatedAt         time.Time `json:"createdAt" format:"date-time"`
+	Email             string    `json:"email" format:"email"`
 	FirstName         string    `json:"firstName" api:"nullable"`
 	LastName          string    `json:"lastName" api:"nullable"`
 	LastPurchaseDate  time.Time `json:"lastPurchaseDate" api:"nullable" format:"date-time"`
-	Lists             []any     `json:"lists"`
-	Name              string    `json:"name" api:"nullable"`
-	OrgID             string    `json:"orgId"`
-	PickupLocation    any       `json:"pickupLocation" api:"nullable"`
-	PostalCode        string    `json:"postalCode" api:"nullable"`
-	PurchaseCount     int64     `json:"purchaseCount"`
-	Region            any       `json:"region" api:"nullable"`
-	Roles             []any     `json:"roles"`
-	State             string    `json:"state" api:"nullable"`
-	TotalSpent        float64   `json:"totalSpent"`
+	// Lists this customer is subscribed to
+	Lists          []CustomerList `json:"lists"`
+	Name           string         `json:"name" api:"nullable"`
+	OrgID          string         `json:"orgId"`
+	PickupLocation any            `json:"pickupLocation" api:"nullable"`
+	PostalCode     string         `json:"postalCode" api:"nullable"`
+	PurchaseCount  int64          `json:"purchaseCount"`
+	Region         any            `json:"region" api:"nullable"`
+	// Roles assigned to this customer
+	Roles []CustomerRole `json:"roles"`
+	State string         `json:"state" api:"nullable"`
+	// Total amount spent across all orders
+	TotalSpent float64   `json:"totalSpent"`
+	UpdatedAt  time.Time `json:"updatedAt" format:"date-time"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
 		ID                respjson.Field
@@ -99,6 +104,7 @@ type Customer struct {
 		AverageOrderValue respjson.Field
 		City              respjson.Field
 		Country           respjson.Field
+		CreatedAt         respjson.Field
 		Email             respjson.Field
 		FirstName         respjson.Field
 		LastName          respjson.Field
@@ -113,6 +119,7 @@ type Customer struct {
 		Roles             respjson.Field
 		State             respjson.Field
 		TotalSpent        respjson.Field
+		UpdatedAt         respjson.Field
 		ExtraFields       map[string]respjson.Field
 		raw               string
 	} `json:"-"`
@@ -121,6 +128,46 @@ type Customer struct {
 // Returns the unmodified JSON received from the API
 func (r Customer) RawJSON() string { return r.JSON.raw }
 func (r *Customer) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type CustomerList struct {
+	ID   string `json:"id"`
+	Name string `json:"name"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		ID          respjson.Field
+		Name        respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r CustomerList) RawJSON() string { return r.JSON.raw }
+func (r *CustomerList) UnmarshalJSON(data []byte) error {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+type CustomerRole struct {
+	ID          string `json:"id"`
+	Color       string `json:"color" api:"nullable"`
+	Description string `json:"description" api:"nullable"`
+	Name        string `json:"name"`
+	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
+	JSON struct {
+		ID          respjson.Field
+		Color       respjson.Field
+		Description respjson.Field
+		Name        respjson.Field
+		ExtraFields map[string]respjson.Field
+		raw         string
+	} `json:"-"`
+}
+
+// Returns the unmodified JSON received from the API
+func (r CustomerRole) RawJSON() string { return r.JSON.raw }
+func (r *CustomerRole) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
 }
 
@@ -200,7 +247,7 @@ func (r *CustomerUpdateParams) UnmarshalJSON(data []byte) error {
 type CustomerListParams struct {
 	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
 	Page  param.Opt[int64] `query:"page,omitzero" json:"-"`
-	// Search by name or email
+	// Search by name or email (case-insensitive)
 	Search param.Opt[string] `query:"search,omitzero" json:"-"`
 	paramObj
 }

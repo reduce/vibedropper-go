@@ -104,7 +104,6 @@ type Form struct {
 	Slug        string     `json:"slug"`
 	// Any of "DRAFT", "ACTIVE", "ARCHIVED".
 	Status         FormStatus `json:"status"`
-	StoreBlocks    []any      `json:"storeBlocks" api:"nullable"`
 	SuccessMessage string     `json:"successMessage" api:"nullable"`
 	Title          string     `json:"title"`
 	UpdatedAt      time.Time  `json:"updatedAt" format:"date-time"`
@@ -118,7 +117,6 @@ type Form struct {
 		OrgID          respjson.Field
 		Slug           respjson.Field
 		Status         respjson.Field
-		StoreBlocks    respjson.Field
 		SuccessMessage respjson.Field
 		Title          respjson.Field
 		UpdatedAt      respjson.Field
