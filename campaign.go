@@ -43,11 +43,11 @@ func (r *CampaignService) Get(ctx context.Context, campaignID string, opts ...op
 	opts = slices.Concat(r.Options, opts)
 	if campaignID == "" {
 		err = errors.New("missing required campaignId parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("campaigns/%s", url.PathEscape(campaignID))
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Returns all campaigns for the organization ordered by creation date descending.
@@ -56,7 +56,7 @@ func (r *CampaignService) List(ctx context.Context, opts ...option.RequestOption
 	opts = slices.Concat(r.Options, opts)
 	path := "campaigns"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 type Campaign struct {

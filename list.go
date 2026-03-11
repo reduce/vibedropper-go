@@ -48,11 +48,11 @@ func (r *ListService) Get(ctx context.Context, listID string, opts ...option.Req
 	opts = slices.Concat(r.Options, opts)
 	if listID == "" {
 		err = errors.New("missing required listId parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("lists/%s", url.PathEscape(listID))
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List lists
@@ -60,7 +60,7 @@ func (r *ListService) List(ctx context.Context, query ListListParams, opts ...op
 	opts = slices.Concat(r.Options, opts)
 	path := "lists"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 type List struct {

@@ -45,11 +45,11 @@ func (r *CustomerService) Get(ctx context.Context, customerID string, opts ...op
 	opts = slices.Concat(r.Options, opts)
 	if customerID == "" {
 		err = errors.New("missing required customerId parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("customers/%s", url.PathEscape(customerID))
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Update a customer
@@ -57,11 +57,11 @@ func (r *CustomerService) Update(ctx context.Context, customerID string, body Cu
 	opts = slices.Concat(r.Options, opts)
 	if customerID == "" {
 		err = errors.New("missing required customerId parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("customers/%s", url.PathEscape(customerID))
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // List customers
@@ -69,7 +69,7 @@ func (r *CustomerService) List(ctx context.Context, query CustomerListParams, op
 	opts = slices.Concat(r.Options, opts)
 	path := "customers"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 type Customer struct {

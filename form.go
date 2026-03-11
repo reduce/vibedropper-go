@@ -45,11 +45,11 @@ func (r *FormService) Get(ctx context.Context, formID string, opts ...option.Req
 	opts = slices.Concat(r.Options, opts)
 	if formID == "" {
 		err = errors.New("missing required formId parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("forms/%s", url.PathEscape(formID))
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Update a form
@@ -57,11 +57,11 @@ func (r *FormService) Update(ctx context.Context, formID string, body FormUpdate
 	opts = slices.Concat(r.Options, opts)
 	if formID == "" {
 		err = errors.New("missing required formId parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("forms/%s", url.PathEscape(formID))
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // List forms
@@ -69,7 +69,7 @@ func (r *FormService) List(ctx context.Context, query FormListParams, opts ...op
 	opts = slices.Concat(r.Options, opts)
 	path := "forms"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 // Delete a form
@@ -77,11 +77,11 @@ func (r *FormService) Delete(ctx context.Context, formID string, opts ...option.
 	opts = slices.Concat(r.Options, opts)
 	if formID == "" {
 		err = errors.New("missing required formId parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("forms/%s", url.PathEscape(formID))
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // List form submissions
@@ -89,11 +89,11 @@ func (r *FormService) ListSubmissions(ctx context.Context, formID string, query 
 	opts = slices.Concat(r.Options, opts)
 	if formID == "" {
 		err = errors.New("missing required formId parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("forms/%s/submissions", url.PathEscape(formID))
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 type Form struct {

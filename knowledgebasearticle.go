@@ -45,11 +45,11 @@ func (r *KnowledgeBaseArticleService) New(ctx context.Context, kbID string, body
 	opts = slices.Concat(r.Options, opts)
 	if kbID == "" {
 		err = errors.New("missing required kbId parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("knowledge-bases/%s/articles", url.PathEscape(kbID))
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // List articles in a knowledge base
@@ -57,11 +57,11 @@ func (r *KnowledgeBaseArticleService) List(ctx context.Context, kbID string, que
 	opts = slices.Concat(r.Options, opts)
 	if kbID == "" {
 		err = errors.New("missing required kbId parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("knowledge-bases/%s/articles", url.PathEscape(kbID))
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 type KnowledgeBaseArticle struct {
