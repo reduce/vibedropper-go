@@ -45,11 +45,11 @@ func (r *ListSubscriberService) List(ctx context.Context, listID string, opts ..
 	opts = slices.Concat(r.Options, opts)
 	if listID == "" {
 		err = errors.New("missing required listId parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("lists/%s/subscribers", url.PathEscape(listID))
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Creates or updates the matching customer record and adds a subscriber entry.
@@ -58,11 +58,11 @@ func (r *ListSubscriberService) Add(ctx context.Context, listID string, body Lis
 	opts = slices.Concat(r.Options, opts)
 	if listID == "" {
 		err = errors.New("missing required listId parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("lists/%s/subscribers", url.PathEscape(listID))
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Remove a subscriber from a list
@@ -70,15 +70,15 @@ func (r *ListSubscriberService) Remove(ctx context.Context, subscriberID string,
 	opts = slices.Concat(r.Options, opts)
 	if body.ListID == "" {
 		err = errors.New("missing required listId parameter")
-		return
+		return nil, err
 	}
 	if subscriberID == "" {
 		err = errors.New("missing required subscriberId parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("lists/%s/subscribers/%s", url.PathEscape(body.ListID), url.PathEscape(subscriberID))
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 type Subscriber struct {

@@ -47,11 +47,11 @@ func (r *KnowledgeBaseService) Get(ctx context.Context, kbID string, opts ...opt
 	opts = slices.Concat(r.Options, opts)
 	if kbID == "" {
 		err = errors.New("missing required kbId parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("knowledge-bases/%s", url.PathEscape(kbID))
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Update a knowledge base
@@ -59,11 +59,11 @@ func (r *KnowledgeBaseService) Update(ctx context.Context, kbID string, body Kno
 	opts = slices.Concat(r.Options, opts)
 	if kbID == "" {
 		err = errors.New("missing required kbId parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("knowledge-bases/%s", url.PathEscape(kbID))
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPatch, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // Returns all knowledge bases ordered by sortOrder then creation date.
@@ -71,7 +71,7 @@ func (r *KnowledgeBaseService) List(ctx context.Context, opts ...option.RequestO
 	opts = slices.Concat(r.Options, opts)
 	path := "knowledge-bases"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Delete a knowledge base
@@ -80,11 +80,11 @@ func (r *KnowledgeBaseService) Delete(ctx context.Context, kbID string, opts ...
 	opts = append([]option.RequestOption{option.WithHeader("Accept", "*/*")}, opts...)
 	if kbID == "" {
 		err = errors.New("missing required kbId parameter")
-		return
+		return err
 	}
 	path := fmt.Sprintf("knowledge-bases/%s", url.PathEscape(kbID))
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, nil, nil, opts...)
-	return
+	return err
 }
 
 type KnowledgeBase struct {

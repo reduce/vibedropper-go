@@ -45,11 +45,11 @@ func (r *PageService) Get(ctx context.Context, pageID string, opts ...option.Req
 	opts = slices.Concat(r.Options, opts)
 	if pageID == "" {
 		err = errors.New("missing required pageId parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("pages/%s", url.PathEscape(pageID))
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 // Update a page
@@ -57,11 +57,11 @@ func (r *PageService) Update(ctx context.Context, pageID string, body PageUpdate
 	opts = slices.Concat(r.Options, opts)
 	if pageID == "" {
 		err = errors.New("missing required pageId parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("pages/%s", url.PathEscape(pageID))
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPut, path, body, &res, opts...)
-	return
+	return res, err
 }
 
 // List pages
@@ -69,7 +69,7 @@ func (r *PageService) List(ctx context.Context, query PageListParams, opts ...op
 	opts = slices.Concat(r.Options, opts)
 	path := "pages"
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	return res, err
 }
 
 // Delete a page
@@ -77,11 +77,11 @@ func (r *PageService) Delete(ctx context.Context, pageID string, opts ...option.
 	opts = slices.Concat(r.Options, opts)
 	if pageID == "" {
 		err = errors.New("missing required pageId parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("pages/%s", url.PathEscape(pageID))
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 type Page struct {
