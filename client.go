@@ -16,10 +16,19 @@ import (
 // interacting with the vibedropper API. You should not instantiate this client
 // directly, and instead use the [NewClient] method instead.
 type Client struct {
-	Options   []option.RequestOption
-	Lists     ListService
+	Options []option.RequestOption
+	// Manage subscriber lists
+	Lists ListService
+	// Manage customers
 	Customers CustomerService
+	// Access email campaigns (read-only)
 	Campaigns CampaignService
+	// Manage forms and submissions
+	Forms FormService
+	// Manage knowledge bases and articles
+	KnowledgeBases KnowledgeBaseService
+	// Manage landing pages
+	Pages PageService
 }
 
 // DefaultClientOptions read from the environment (VIBEDROPPER_API_KEY,
@@ -47,6 +56,9 @@ func NewClient(opts ...option.RequestOption) (r Client) {
 	r.Lists = NewListService(opts...)
 	r.Customers = NewCustomerService(opts...)
 	r.Campaigns = NewCampaignService(opts...)
+	r.Forms = NewFormService(opts...)
+	r.KnowledgeBases = NewKnowledgeBaseService(opts...)
+	r.Pages = NewPageService(opts...)
 
 	return
 }
