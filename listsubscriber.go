@@ -18,6 +18,8 @@ import (
 	"github.com/reduce/vibedropper-go/packages/respjson"
 )
 
+// Manage list subscribers
+//
 // ListSubscriberService contains methods and other services that help with
 // interacting with the vibedropper API.
 //
@@ -37,53 +39,55 @@ func NewListSubscriberService(opts ...option.RequestOption) (r ListSubscriberSer
 	return
 }
 
-// List subscribers
+// Returns all subscribers for the list ordered by subscribe date descending.
+// Includes linked customer data.
 func (r *ListSubscriberService) List(ctx context.Context, listID string, opts ...option.RequestOption) (res *ListSubscriberListResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if listID == "" {
 		err = errors.New("missing required listId parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("lists/%s/subscribers", url.PathEscape(listID))
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
-// Add subscriber to list
+// Creates or updates the matching customer record and adds a subscriber entry.
+// Returns 400 with code `duplicate` if already subscribed.
 func (r *ListSubscriberService) Add(ctx context.Context, listID string, body ListSubscriberAddParams, opts ...option.RequestOption) (res *ListSubscriberAddResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if listID == "" {
 		err = errors.New("missing required listId parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("lists/%s/subscribers", url.PathEscape(listID))
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
-	return
+	return res, err
 }
 
-// Remove subscriber from list
+// Remove a subscriber from a list
 func (r *ListSubscriberService) Remove(ctx context.Context, subscriberID string, body ListSubscriberRemoveParams, opts ...option.RequestOption) (res *ListSubscriberRemoveResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if body.ListID == "" {
 		err = errors.New("missing required listId parameter")
-		return
+		return nil, err
 	}
 	if subscriberID == "" {
 		err = errors.New("missing required subscriberId parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("lists/%s/subscribers/%s", url.PathEscape(body.ListID), url.PathEscape(subscriberID))
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
 type Subscriber struct {
-	ID           string `json:"id"`
-	Customer     any    `json:"customer" api:"nullable"`
-	CustomFields any    `json:"customFields" api:"nullable"`
-	Email        string `json:"email"`
-	ListID       string `json:"listId"`
-	Name         string `json:"name" api:"nullable"`
+	ID           string   `json:"id"`
+	Customer     Customer `json:"customer" api:"nullable"`
+	CustomFields any      `json:"customFields" api:"nullable"`
+	Email        string   `json:"email" format:"email"`
+	ListID       string   `json:"listId"`
+	Name         string   `json:"name" api:"nullable"`
 	// Any of "SUBSCRIBED", "UNSUBSCRIBED", "PENDING", "BOUNCED".
 	Status       SubscriberStatus `json:"status"`
 	SubscribedAt time.Time        `json:"subscribedAt" format:"date-time"`
@@ -166,11 +170,14 @@ func (r *ListSubscriberRemoveResponse) UnmarshalJSON(data []byte) error {
 }
 
 type ListSubscriberAddParams struct {
-	Email            string            `json:"email" api:"required" format:"email"`
-	Name             param.Opt[string] `json:"name,omitzero"`
+	Email string            `json:"email" api:"required" format:"email"`
+	Name  param.Opt[string] `json:"name,omitzero"`
+	// Pickup location ID (must belong to the given regionId)
 	PickupLocationID param.Opt[string] `json:"pickupLocationId,omitzero"`
-	RegionID         param.Opt[string] `json:"regionId,omitzero"`
-	CustomFields     any               `json:"customFields,omitzero"`
+	// Region ID to assign to the customer
+	RegionID param.Opt[string] `json:"regionId,omitzero"`
+	// Arbitrary key-value metadata
+	CustomFields any `json:"customFields,omitzero"`
 	paramObj
 }
 
