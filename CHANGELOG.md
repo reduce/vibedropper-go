@@ -1,5 +1,39 @@
 # Changelog
 
+## 0.3.0 (2026-03-28)
+
+Full Changelog: [v0.2.0...v0.3.0](https://github.com/reduce/vibedropper-go/compare/v0.2.0...v0.3.0)
+
+### Features
+
+* **api:** api update ([2242a7a](https://github.com/reduce/vibedropper-go/commit/2242a7ac60201ecd52561e732fc394804c012904))
+* **api:** manual updates ([e8538a2](https://github.com/reduce/vibedropper-go/commit/e8538a2fc909b26bfceb8acd2d0eda022118099e))
+* **internal:** support comma format in multipart form encoding ([ae1930e](https://github.com/reduce/vibedropper-go/commit/ae1930e55011c935b6a2070659dcd4edc69cdc34))
+
+
+### Bug Fixes
+
+* prevent duplicate ? in query params ([216c10e](https://github.com/reduce/vibedropper-go/commit/216c10e6574590ee349bb5402f196996b761b00a))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([66304d1](https://github.com/reduce/vibedropper-go/commit/66304d14a6d74659fada1feb9a6f08f0cf5dc5f0))
+* **ci:** skip uploading artifacts on stainless-internal branches ([c89b7e1](https://github.com/reduce/vibedropper-go/commit/c89b7e1328331d0fce7167ed1a840740e17dbaab))
+* **ci:** support opting out of skipping builds on metadata-only commits ([ff0f599](https://github.com/reduce/vibedropper-go/commit/ff0f59965ffb7c30b33eb7e27e6cb8f12c67d4f8))
+* **client:** fix multipart serialisation of Default() fields ([f959e17](https://github.com/reduce/vibedropper-go/commit/f959e178a652442c10f39a64c33c8944fef0c347))
+* **internal:** codegen related update ([6af49a4](https://github.com/reduce/vibedropper-go/commit/6af49a4b53c5326eecf8d919246367b059f4f66d))
+* **internal:** codegen related update ([409e436](https://github.com/reduce/vibedropper-go/commit/409e4368a7198a05e8e7c9c9470edb599fd636f7))
+* **internal:** minor cleanup ([503a412](https://github.com/reduce/vibedropper-go/commit/503a412d7951c8babacf278375459bb503b4791d))
+* **internal:** support default value struct tag ([bbf2659](https://github.com/reduce/vibedropper-go/commit/bbf26595a304e891cef85166b0d8c0fb0770ef21))
+* **internal:** tweak CI branches ([cc97668](https://github.com/reduce/vibedropper-go/commit/cc976686289438c396098993b977bea1f4e94460))
+* **internal:** update gitignore ([f558928](https://github.com/reduce/vibedropper-go/commit/f55892854414865737c0b446f1b9c4b8126cc528))
+* **internal:** use explicit returns ([fb8948f](https://github.com/reduce/vibedropper-go/commit/fb8948f51184bdc70f015384875542dcc71ebb64))
+* **internal:** use explicit returns in more places ([80a6aa4](https://github.com/reduce/vibedropper-go/commit/80a6aa4b289354e72d89e78d26c5a6f06e2cf327))
+* remove unnecessary error check for url parsing ([fcfa711](https://github.com/reduce/vibedropper-go/commit/fcfa71186b48ccb2256cdf2abecf74c42fc83500))
+* update docs for api:"required" ([0372be4](https://github.com/reduce/vibedropper-go/commit/0372be4e598953b45dfbe9a804b11c469e51def6))
+* update SDK settings ([f3240de](https://github.com/reduce/vibedropper-go/commit/f3240de5b624248092f1b4263bdd2af5d52b658a))
+
 ## 0.2.0 (2026-03-03)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/reduce/vibedropper-go/compare/v0.1.0...v0.2.0)
