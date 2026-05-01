@@ -38,7 +38,7 @@ func TestUserAgentHeader(t *testing.T) {
 			},
 		}),
 	)
-	client.Lists.List(context.Background(), vibedropper.ListListParams{})
+	_, _ = client.Lists.List(context.Background(), vibedropper.ListListParams{})
 	if userAgent != fmt.Sprintf("Vibedropper/Go %s", internal.PackageVersion) {
 		t.Errorf("Expected User-Agent to be correct, but got: %#v", userAgent)
 	}

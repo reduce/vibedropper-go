@@ -12,13 +12,13 @@ import (
 	"time"
 
 	"github.com/reduce/vibedropper-go/internal/apijson"
-	"github.com/reduce/vibedropper-go/internal/apiquery"
 	"github.com/reduce/vibedropper-go/internal/requestconfig"
 	"github.com/reduce/vibedropper-go/option"
-	"github.com/reduce/vibedropper-go/packages/param"
 	"github.com/reduce/vibedropper-go/packages/respjson"
 )
 
+// Access email campaigns (read-only)
+//
 // CampaignService contains methods and other services that help with interacting
 // with the vibedropper API.
 //
@@ -38,48 +38,76 @@ func NewCampaignService(opts ...option.RequestOption) (r CampaignService) {
 	return
 }
 
-// Get campaign
+// Get a campaign
 func (r *CampaignService) Get(ctx context.Context, campaignID string, opts ...option.RequestOption) (res *CampaignGetResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	if campaignID == "" {
 		err = errors.New("missing required campaignId parameter")
-		return
+		return nil, err
 	}
 	path := fmt.Sprintf("campaigns/%s", url.PathEscape(campaignID))
 	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	return res, err
 }
 
-// List campaigns
-func (r *CampaignService) List(ctx context.Context, query CampaignListParams, opts ...option.RequestOption) (res *CampaignListResponse, err error) {
+// Returns all campaigns for the organization ordered by creation date descending.
+// No pagination.
+func (r *CampaignService) List(ctx context.Context, opts ...option.RequestOption) (res *CampaignListResponse, err error) {
 	opts = slices.Concat(r.Options, opts)
 	path := "campaigns"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
+	return res, err
 }
 
 type Campaign struct {
-	ID        string    `json:"id"`
-	CreatedAt time.Time `json:"createdAt" format:"date-time"`
-	ListIDs   []string  `json:"listIds"`
-	Name      string    `json:"name"`
-	OrgID     string    `json:"orgId"`
-	SentAt    time.Time `json:"sentAt" api:"nullable" format:"date-time"`
+	ID          string    `json:"id"`
+	CreatedAt   time.Time `json:"createdAt" format:"date-time"`
+	FromEmail   string    `json:"fromEmail" format:"email"`
+	FromName    string    `json:"fromName"`
+	Name        string    `json:"name"`
+	OrgID       string    `json:"orgId"`
+	PreviewText string    `json:"previewText" api:"nullable"`
+	ReplyTo     string    `json:"replyTo" api:"nullable" format:"email"`
+	ScheduledAt time.Time `json:"scheduledAt" api:"nullable" format:"date-time"`
+	SentAt      time.Time `json:"sentAt" api:"nullable" format:"date-time"`
 	// Any of "DRAFT", "SCHEDULED", "SENDING", "SENT".
-	Status  CampaignStatus `json:"status"`
-	Subject string         `json:"subject"`
+	Status       CampaignStatus `json:"status"`
+	Subject      string         `json:"subject"`
+	TotalBounces int64          `json:"totalBounces"`
+	// Total click events
+	TotalClicks int64 `json:"totalClicks"`
+	// Unique opens
+	TotalOpens        int64 `json:"totalOpens"`
+	TotalSent         int64 `json:"totalSent"`
+	TotalUnsubscribes int64 `json:"totalUnsubscribes"`
+	// Total view events (all pixel loads)
+	TotalViews   int64     `json:"totalViews"`
+	UniqueClicks int64     `json:"uniqueClicks"`
+	UpdatedAt    time.Time `json:"updatedAt" format:"date-time"`
 	// JSON contains metadata for fields, check presence with [respjson.Field.Valid].
 	JSON struct {
-		ID          respjson.Field
-		CreatedAt   respjson.Field
-		ListIDs     respjson.Field
-		Name        respjson.Field
-		OrgID       respjson.Field
-		SentAt      respjson.Field
-		Status      respjson.Field
-		Subject     respjson.Field
-		ExtraFields map[string]respjson.Field
-		raw         string
+		ID                respjson.Field
+		CreatedAt         respjson.Field
+		FromEmail         respjson.Field
+		FromName          respjson.Field
+		Name              respjson.Field
+		OrgID             respjson.Field
+		PreviewText       respjson.Field
+		ReplyTo           respjson.Field
+		ScheduledAt       respjson.Field
+		SentAt            respjson.Field
+		Status            respjson.Field
+		Subject           respjson.Field
+		TotalBounces      respjson.Field
+		TotalClicks       respjson.Field
+		TotalOpens        respjson.Field
+		TotalSent         respjson.Field
+		TotalUnsubscribes respjson.Field
+		TotalViews        respjson.Field
+		UniqueClicks      respjson.Field
+		UpdatedAt         respjson.Field
+		ExtraFields       map[string]respjson.Field
+		raw               string
 	} `json:"-"`
 }
 
@@ -128,18 +156,4 @@ type CampaignListResponse struct {
 func (r CampaignListResponse) RawJSON() string { return r.JSON.raw }
 func (r *CampaignListResponse) UnmarshalJSON(data []byte) error {
 	return apijson.UnmarshalRoot(data, r)
-}
-
-type CampaignListParams struct {
-	Limit param.Opt[int64] `query:"limit,omitzero" json:"-"`
-	Page  param.Opt[int64] `query:"page,omitzero" json:"-"`
-	paramObj
-}
-
-// URLQuery serializes [CampaignListParams]'s query parameters as `url.Values`.
-func (r CampaignListParams) URLQuery() (v url.Values, err error) {
-	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
-		ArrayFormat:  apiquery.ArrayQueryFormatComma,
-		NestedFormat: apiquery.NestedQueryFormatBrackets,
-	})
 }

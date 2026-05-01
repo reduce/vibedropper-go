@@ -13,7 +13,7 @@ import (
 	"github.com/reduce/vibedropper-go/option"
 )
 
-func TestCampaignGet(t *testing.T) {
+func TestKnowledgeBaseArticleNewWithOptionalParams(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -26,7 +26,17 @@ func TestCampaignGet(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Campaigns.Get(context.TODO(), "campaignId")
+	_, err := client.KnowledgeBases.Articles.New(
+		context.TODO(),
+		"kbId",
+		vibedropper.KnowledgeBaseArticleNewParams{
+			Title:      "title",
+			CategoryID: vibedropper.String("categoryId"),
+			Content:    vibedropper.String("content"),
+			Excerpt:    vibedropper.String("excerpt"),
+			Published:  vibedropper.Bool(true),
+		},
+	)
 	if err != nil {
 		var apierr *vibedropper.Error
 		if errors.As(err, &apierr) {
@@ -36,7 +46,7 @@ func TestCampaignGet(t *testing.T) {
 	}
 }
 
-func TestCampaignList(t *testing.T) {
+func TestKnowledgeBaseArticleListWithOptionalParams(t *testing.T) {
 	t.Skip("Mock server tests are disabled")
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
@@ -49,7 +59,14 @@ func TestCampaignList(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Campaigns.List(context.TODO())
+	_, err := client.KnowledgeBases.Articles.List(
+		context.TODO(),
+		"kbId",
+		vibedropper.KnowledgeBaseArticleListParams{
+			Limit: vibedropper.Int(100),
+			Page:  vibedropper.Int(0),
+		},
+	)
 	if err != nil {
 		var apierr *vibedropper.Error
 		if errors.As(err, &apierr) {

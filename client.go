@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"slices"
+	"strings"
 
 	"github.com/reduce/vibedropper-go/internal/requestconfig"
 	"github.com/reduce/vibedropper-go/option"
@@ -16,21 +17,38 @@ import (
 // interacting with the vibedropper API. You should not instantiate this client
 // directly, and instead use the [NewClient] method instead.
 type Client struct {
-	Options   []option.RequestOption
-	Lists     ListService
+	Options []option.RequestOption
+	// Manage subscriber lists
+	Lists ListService
+	// Manage customers
 	Customers CustomerService
+	// Access email campaigns (read-only)
 	Campaigns CampaignService
+	// Manage forms and submissions
+	Forms FormService
+	// Manage knowledge bases and articles
+	KnowledgeBases KnowledgeBaseService
+	// Manage landing pages
+	Pages PageService
 }
 
 // DefaultClientOptions read from the environment (VIBEDROPPER_API_KEY,
 // VIBEDROPPER_BASE_URL). This should be used to initialize new clients.
 func DefaultClientOptions() []option.RequestOption {
-	defaults := []option.RequestOption{option.WithEnvironmentProduction()}
+	defaults := []option.RequestOption{option.WithHTTPClient(defaultHTTPClient()), option.WithEnvironmentProduction()}
 	if o, ok := os.LookupEnv("VIBEDROPPER_BASE_URL"); ok {
 		defaults = append(defaults, option.WithBaseURL(o))
 	}
 	if o, ok := os.LookupEnv("VIBEDROPPER_API_KEY"); ok {
 		defaults = append(defaults, option.WithAPIKey(o))
+	}
+	if o, ok := os.LookupEnv("VIBEDROPPER_CUSTOM_HEADERS"); ok {
+		for _, line := range strings.Split(o, "\n") {
+			colon := strings.Index(line, ":")
+			if colon >= 0 {
+				defaults = append(defaults, option.WithHeader(strings.TrimSpace(line[:colon]), strings.TrimSpace(line[colon+1:])))
+			}
+		}
 	}
 	return defaults
 }
@@ -47,6 +65,9 @@ func NewClient(opts ...option.RequestOption) (r Client) {
 	r.Lists = NewListService(opts...)
 	r.Customers = NewCustomerService(opts...)
 	r.Campaigns = NewCampaignService(opts...)
+	r.Forms = NewFormService(opts...)
+	r.KnowledgeBases = NewKnowledgeBaseService(opts...)
+	r.Pages = NewPageService(opts...)
 
 	return
 }
